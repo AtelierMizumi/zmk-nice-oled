@@ -62,24 +62,24 @@ LV_IMG_DECLARE(bongo_cat_tap2_03);
 LV_IMG_DECLARE(bongo_cat_tap2_04);
 
 #define ANIMATION_SPEED_IDLE 10000
-const lv_img_dsc_t *idle_imgs[] = {
+static const lv_img_dsc_t *idle_imgs[] = {
     &bongo_cat_double_tap1_06,
 };
 
 #define ANIMATION_SPEED_SLOW 2000
-const lv_img_dsc_t *slow_imgs[] = {
+static const lv_img_dsc_t *slow_imgs[] = {
     &bongo_cat_tap1_03,
     &bongo_cat_tap2_03,
 };
 
 #define ANIMATION_SPEED_MID 500
-const lv_img_dsc_t *mid_imgs[] = {
+static const lv_img_dsc_t *mid_imgs[] = {
     &bongo_cat_tap1_03,
     &bongo_cat_tap2_03,
 };
 
 #define ANIMATION_SPEED_FAST 200
-const lv_img_dsc_t *fast_imgs[] = {
+static const lv_img_dsc_t *fast_imgs[] = {
     &bongo_cat_double_tap2_02,
     &bongo_cat_double_tap1_03,
 };
@@ -88,7 +88,7 @@ struct wpm_bongo_cat_status_state {
     uint8_t wpm;
 };
 
-enum anim_state {
+static enum anim_state {
     anim_state_none,
     anim_state_idle,
     anim_state_slow,
