@@ -18,6 +18,10 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include "output.h"
 #include "screen_peripheral.h"
 
+#if IS_ENABLED(CONFIG_NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR)
+#include "peripheral_status_bar.h"
+#endif
+
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
 /**
@@ -48,8 +52,15 @@ static void draw_canvas(lv_obj_t *widget, lv_color_t cbuf[], const struct status
 
     // Draw widgets
     draw_background(canvas);
+
+#if IS_ENABLED(CONFIG_NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR)
+    // Compact horizontal status bar: BT icon + battery bar on one line
+    draw_peripheral_status_bar(canvas, state);
+#else
+    // Default vertical status widgets
     draw_output_status(canvas, state);
     draw_battery_status(canvas, state);
+#endif
 
     // Rotate for horizontal display
     rotate_canvas(canvas, cbuf);

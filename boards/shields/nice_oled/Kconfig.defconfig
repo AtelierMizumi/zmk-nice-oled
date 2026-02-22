@@ -168,9 +168,29 @@ bool "Enable static vim_marcos on peripheral"
 config NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_HAMMER_BEAM
     bool "Enable static hammer beam on peripheral"
     default n
+
+config NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_HAMMER_BEAM_COMPACT
+    bool "Enable compact hammer beam (128x22, fits below status bar)"
+    default y if NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR
+    depends on NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_HAMMER_BEAM
 endif # NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL
 
 endif # NICE_OLED_WIDGET_ANIMATION_PERIPHERAL || NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL
+
+### PERIPHERAL STATUS BAR (independent BT + battery bar) {{{
+config NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR
+    bool "Show integrated status bar on peripheral (compact BT + battery bar)"
+    default n
+    help
+      When enabled, the peripheral screen shows a compact horizontal
+      status bar at the top with BT connection icon and battery level bar.
+      This is independent from the central side status display.
+
+config NICE_OLED_PERIPHERAL_STATUS_BAR_HEIGHT
+    int "Height of peripheral status bar in pixels"
+    default 10
+    depends on NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR
+### PERIPHERAL STATUS BAR END }}}
 
 # CONFIG_NICE_OLED_WIDGET_PERIPHERAL
 config NICE_OLED_WIDGET_PERIPHERAL

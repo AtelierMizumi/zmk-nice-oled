@@ -163,8 +163,13 @@ LV_IMG_DECLARE(vip_marcos);
 #define FIXED_IMAGE_VIP_MARCOS &vip_marcos
 
 #elif IS_ENABLED(CONFIG_NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_HAMMER_BEAM)
+#if IS_ENABLED(CONFIG_NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_HAMMER_BEAM_COMPACT)
+LV_IMG_DECLARE(hammer_beam_compact);
+#define FIXED_IMAGE_HAMMER_BEAM &hammer_beam_compact
+#else
 LV_IMG_DECLARE(hammer_beam);
 #define FIXED_IMAGE_HAMMER_BEAM &hammer_beam
+#endif
 
 #else
 
@@ -218,7 +223,12 @@ void draw_animation(lv_obj_t *canvas, struct zmk_widget_screen *widget) {
        // IS_ENABLED(CONFIG_NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL)
 
     if (art) {
+#if IS_ENABLED(CONFIG_NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR)
+        /* Position art below the status bar */
+        lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, CONFIG_NICE_OLED_PERIPHERAL_STATUS_BAR_HEIGHT);
+#else
         lv_obj_align(art, LV_ALIGN_TOP_LEFT, CONFIG_NICE_OLED_WIDGET_ANIMATION_PERIPHERAL_CUSTOM_X, CONFIG_NICE_OLED_WIDGET_ANIMATION_PERIPHERAL_CUSTOM_Y);
+#endif
     }
 }
 #endif
