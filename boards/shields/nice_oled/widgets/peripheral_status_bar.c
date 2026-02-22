@@ -17,7 +17,6 @@
  */
 
 #include "peripheral_status_bar.h"
-#include <fonts.h>
 #include <zephyr/kernel.h>
 
 /* ── Compact BT connected icon (8x8) ─────────────────────────────── */
