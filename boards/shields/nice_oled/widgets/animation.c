@@ -210,7 +210,12 @@ void draw_animation(lv_obj_t *canvas, struct zmk_widget_screen *widget) {
 #elif IS_ENABLED(CONFIG_NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_VIP_MARCOS)
     lv_img_set_src(art, FIXED_IMAGE_VIP_MARCOS);
 #elif IS_ENABLED(CONFIG_NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_HAMMER_BEAM)
+#if IS_ENABLED(CONFIG_NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR)
+    LV_IMG_DECLARE(hammer_beam_compact);
+    lv_img_set_src(art, &hammer_beam_compact);
+#else
     lv_img_set_src(art, FIXED_IMAGE_HAMMER_BEAM);
+#endif
 #else
     int length = sizeof(crystal_imgs) / sizeof(crystal_imgs[0]);
     srand(k_uptime_get_32());
@@ -224,8 +229,12 @@ void draw_animation(lv_obj_t *canvas, struct zmk_widget_screen *widget) {
 
     if (art) {
 #if IS_ENABLED(CONFIG_NICE_OLED_PERIPHERAL_SHOW_STATUS_BAR)
-        /* Position art below the status bar */
+        /* Center the art vertically for Pokemon etc, but Hammerbeam natively spans the remaining bottom of the 128x32 screen if placed at zero */
+#if IS_ENABLED(CONFIG_NICE_OLED_WIDGET_STATIC_IMAGE_PERIPHERAL_HAMMER_BEAM)
+        lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, 0); // 112 width leaves exactly 16 pixels open at X=112..127 for the status bar!
+#else
         lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, CONFIG_NICE_OLED_PERIPHERAL_STATUS_BAR_HEIGHT);
+#endif
 #else
         lv_obj_align(art, LV_ALIGN_TOP_LEFT, CONFIG_NICE_OLED_WIDGET_ANIMATION_PERIPHERAL_CUSTOM_X, CONFIG_NICE_OLED_WIDGET_ANIMATION_PERIPHERAL_CUSTOM_Y);
 #endif
